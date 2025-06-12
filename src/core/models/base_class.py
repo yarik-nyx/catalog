@@ -9,5 +9,5 @@ class Base(DeclarativeBase):
         naming_convention = settings.db.naming_convention
     )
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    # id: Mapped[int] = mapped_column(primary_key=True)
 

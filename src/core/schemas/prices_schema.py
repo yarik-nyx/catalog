@@ -1,37 +1,51 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 
 
-class ottomanFlat(BaseModel):
-    count: int
-    price: int
-
-class mechanismFlat(BaseModel):
-    count: int
-    price: int
-
-class fabricPct(BaseModel):
-    category: int
+class BaseSchema(BaseModel):
+    pass
+        
 
 
-class extras(BaseModel):
+class ottomanFlat(BaseSchema):
+    count: int = 0
+    price: int = 0
+
+class mechanismFlat(BaseSchema):
+    count: int = 0
+    price: int = 0
+
+class fabricPct(BaseSchema):
+    category: int = 0
+
+
+class extras(BaseSchema):
     ottomanFlat: ottomanFlat
     mechanismFlat: mechanismFlat
 
-class parameters(BaseModel):
+class parameters(BaseSchema):
     extras: extras
     fabricPct: fabricPct
-    marginPct: int
-    pricePerMeter: int
+    marginPct: int = 0
+    pricePerMeter: int = 0
 
-class PriceJsonSchema(BaseModel):
+class PriceJsonSchema(BaseSchema):
     parameters: parameters
 
-class PriceSchema(BaseModel):
-    engine: str
+    
+
+class PriceSchema(BaseSchema):
+    engine: str 
     parameters: PriceJsonSchema
+
+    model_config = {"exclude": {"created_at", "updated_at"}}
+
+
 
 
 class PriceCreateSchema(PriceSchema):
+    pass
+
+class PriceUpdateSchema(PriceSchema):
     pass
 
 class PriceReadSchema(PriceSchema):

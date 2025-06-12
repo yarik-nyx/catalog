@@ -2,9 +2,9 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import ORJSONResponse
 from pydantic import ValidationError
 from sqlalchemy.exc import DatabaseError
-import logging
+from core.utils.logger import logger as log
 
-log = logging.getLogger(__name__)
+
 
 def register_errors_handlers(app: FastAPI) -> None:
     

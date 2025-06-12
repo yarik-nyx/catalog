@@ -2,11 +2,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from core.models.models import PricingPricingstrategy
 from core.schemas.prices_schema import PriceJsonSchema
+from typing import Sequence
 
 
 
 
-async def get_all_prices(session: AsyncSession):
+
+async def get_all_prices(session: AsyncSession) -> Sequence[PricingPricingstrategy]:
+    stmt = select(PricingPricingstrategy)
+    executed = await session.execute(stmt)
     stmt = select(PricingPricingstrategy)
     executed = await session.execute(stmt)
     result = executed.scalars().all()
