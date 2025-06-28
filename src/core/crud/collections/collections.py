@@ -15,7 +15,7 @@ async def get_all_collections(
     .options(joinedload(CatalogCollection.template))
     .order_by(text(f"{sort_by_field} {order_direction}"))
     )
-
+    
     executed = await session.execute(stmt)
     result = executed.scalars().all()
 

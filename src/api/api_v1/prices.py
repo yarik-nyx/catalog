@@ -1,6 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from core.config import settings
-from core.crud.prices.prices import get_all_prices
+from core.crud.prices.prices import get_all_prices, sum_price
 from core.schemas.prices_schema import PriceJsonSchema
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends
@@ -18,5 +18,13 @@ async def get_prices(
     session: AsyncSession = Depends(db_helper.session_getter)
 ):
     
-    users = await get_all_prices(session = session)
-    return users
+    prices = await get_all_prices(session = session)
+    return prices
+
+@prices_router.post("/sum")
+async def post_prices(
+    session: AsyncSession = Depends(db_helper.session_getter),
+    body: PriceJsonSchema = Body(...)
+):
+    price = await sum_price(session=session,body=body)
+    return price
