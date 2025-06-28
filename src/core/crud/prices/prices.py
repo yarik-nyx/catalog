@@ -2,10 +2,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from core.models.models import PricingPricingstrategy
 from core.schemas.prices_schema import PriceJsonSchema, PriceJsonSchemaSum
-from typing import Sequence
-import json
+from typing import List
 
-async def get_all_prices(session: AsyncSession) -> Sequence[PricingPricingstrategy]:
+
+async def get_all_prices(session: AsyncSession) -> List[PriceJsonSchema]:
     stmt = select(PricingPricingstrategy)
     executed = await session.execute(stmt)
     result = executed.scalars().all()
@@ -32,5 +32,6 @@ async def sum_price(session: AsyncSession, body: PriceJsonSchema):
                 param.extras.mechanismFlat.count * param.extras.mechanismFlat.price
             )
     ) * ((param.fabricPct.category + 100) / 100)
+
     output = PriceJsonSchemaSum(parameters=dict(body.parameters), sum=sum)
     return output

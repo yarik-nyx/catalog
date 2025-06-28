@@ -17,6 +17,7 @@ class ApiV1Prefix(BaseModel):
     prefix: str = "/v1"
     prices: str = "/prices"
     collections: str = "/collections"
+    products: str = "/products"
 
 class ApiPrefix(BaseModel):
     prefix: str = "/api"

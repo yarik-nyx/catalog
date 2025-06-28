@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from core.models import db_helper
 from fastapi.responses import ORJSONResponse
 from core.utils.errors_handlers import register_errors_handlers
-from core.models.models import PricingPricingstrategy
+
 
 
 
