@@ -39,28 +39,8 @@ class DbConfig(BaseModel):
         "pk": "pk_%(table_name)s"
     }
 
-class AdminViewConfig(BaseModel):
-    SECRET_KEY: str = ""
-    admin_db_url: str = ""
-    track_events: bool = True
-    allowed_ips: list[str] = ["10.0.0.1"],
-    allowed_networks: list[str] = ["192.168.1.0/24"],
-    secure_cookies:bool = False,
-    enforce_https:bool = False,
-    initial_admin:bool = True
-    max_sessions_per_user:int = 3,
-    session_timeout_minutes:int = 15,
 
-    track_events:bool = True,
-    track_sessions_in_db: bool = True,
-
-    initial_username: str = "admin",
-    initial_password: str = "tTRm+eAA9hM.A7"
-
-    mount_path:str = "/admin"
-    
-
-    
+  
 
 class Settings(BaseModel):
     run: AppConfig = AppConfig()
@@ -68,9 +48,6 @@ class Settings(BaseModel):
     api: ApiPrefix = ApiPrefix()
     db: DbConfig = DbConfig()
     db.DB_URL = env.DB_URL
-    AdminConfig: AdminViewConfig = AdminViewConfig()
-    AdminConfig.admin_db_url = env.DB_URL
-    AdminConfig.SECRET_KEY = env.SECRET_KEY
 
     
 
