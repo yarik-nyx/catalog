@@ -5,14 +5,13 @@ from core.config import settings
 from contextlib import asynccontextmanager
 from core.models import db_helper
 from fastapi.responses import ORJSONResponse
-from core.admin.admin import admin
 from core.utils.errors_handlers import register_errors_handlers
+from core.models.models import PricingPricingstrategy
 
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await admin.initialize()
     yield
     await db_helper.db_helper.dispose()
 
@@ -23,12 +22,6 @@ app = FastAPI(
 )
 
 register_errors_handlers(app = app)
-
-
-
-app.mount(
-    path = "/" + admin.mount_path, 
-    app = admin.app)
 
 app.include_router(
     router = api_router,

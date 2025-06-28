@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from core.config import settings
-from core.crud.prices import get_all_prices
+from core.crud.prices.prices import get_all_prices
 from core.schemas.prices_schema import PriceJsonSchema
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends

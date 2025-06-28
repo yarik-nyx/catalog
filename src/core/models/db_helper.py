@@ -31,7 +31,8 @@ class DatabaseHelper:
     
     async def session_getter(self) -> AsyncGenerator[AsyncSession, None]:
          async with self.session_factory() as session:
-             yield session 
+             yield session
+
 
 db_helper = DatabaseHelper(
      url = settings.db.DB_URL,

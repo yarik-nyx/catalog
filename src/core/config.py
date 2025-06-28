@@ -17,6 +17,7 @@ class EnvConfig(BaseSettings):
 class ApiV1Prefix(BaseModel):
     prefix: str = "/v1"
     prices: str = "/prices"
+    collections: str = "/collections"
 
 class ApiPrefix(BaseModel):
     prefix: str = "/api"
