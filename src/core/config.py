@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import BaseModel
+from typing import List
 
 
 
@@ -7,6 +8,7 @@ from pydantic import BaseModel
 class AppConfig(BaseModel):
     host: str = "127.0.0.1"
     port: int = 8000
+    allowed_ips: List[str] = ["127.0.0.1", "185.56.117.236", "5.18.205.97"]
 
 class EnvConfig(BaseSettings):
     DB_URL: str

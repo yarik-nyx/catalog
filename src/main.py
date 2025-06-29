@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from core.models import db_helper
 from fastapi.responses import ORJSONResponse
 from core.utils.errors_handlers import register_errors_handlers
-
+from fastapi.middleware.cors import CORSMiddleware
 
 
 
@@ -19,6 +19,14 @@ app = FastAPI(
     default_response_class = ORJSONResponse,
     lifespan = lifespan,
     docs_url= "/docs"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.run.allowed_ips,  # You can specify domains instead of *
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 register_errors_handlers(app = app)

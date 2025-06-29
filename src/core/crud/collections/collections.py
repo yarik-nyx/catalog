@@ -5,6 +5,7 @@ from core.models.models import CatalogCollection, CatalogProduct, Classification
 from typing import Sequence
 from fastapi import HTTPException
 
+
 async def get_all_collections(
         session: AsyncSession,
         sort_by_field: str,
