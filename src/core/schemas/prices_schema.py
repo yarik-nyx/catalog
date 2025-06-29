@@ -34,6 +34,11 @@ class PriceJsonSchema(BaseSchema):
 class PriceJsonSchemaSum(BaseSchema):
     parameters: parameters
     sum: int
+
+class PriceJsonSchemaSumWithName(BaseSchema):
+    engine: str
+    parameters: parameters
+    sum: int
     
 
 class PriceSchema(BaseSchema):

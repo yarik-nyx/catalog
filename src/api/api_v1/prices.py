@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, Depends
 from core.config import settings
 from core.crud.prices.prices import get_all_prices, sum_price
-from core.schemas.prices_schema import PriceJsonSchema, PriceJsonSchemaSum
+from core.schemas.prices_schema import PriceJsonSchema, PriceJsonSchemaSum, PriceJsonSchemaSumWithName
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.models.db_helper import db_helper
 from typing import List
@@ -12,7 +12,7 @@ prices_router = APIRouter(
 )
 
 # response_model = list[PriceJsonSchema]
-@prices_router.get("", response_model=List[PriceJsonSchema], description="Get all pricing strategy with sum")
+@prices_router.get("", response_model=List[PriceJsonSchemaSumWithName], description="Get all pricing strategy with sum")
 async def get_prices(
     session: AsyncSession = Depends(db_helper.session_getter)
 ):
