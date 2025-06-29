@@ -9,7 +9,7 @@ RUN apt-get update && \
     libyaml-dev \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app_api
+WORKDIR /api_app
 COPY pyproject.toml ./
 RUN poetry install --no-root
 

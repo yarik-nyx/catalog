@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, text
 from sqlalchemy.orm import joinedload
-from core.models.models import CatalogCollection, CatalogProduct, ClassificationSubcategory
+from core.models.models import CatalogCollection, CatalogProduct, ClassificationSubcategory, ClassificationCategory
 from typing import Sequence
 from fastapi import HTTPException
 
@@ -58,3 +58,28 @@ async def get_all_products_by_collection_id(
     result_product = executed_stmt_product.scalars().all()
     
     return result_product
+
+async def get_all_categories_by_collection_id(
+        session: AsyncSession,
+        collection_id: int,
+    ):
+    stmt_get_collection = (
+        select(CatalogCollection)
+        .where(CatalogCollection.id == collection_id)
+    )
+    executed_stmt_collection = await session.execute(stmt_get_collection)
+    result_collection = executed_stmt_collection.scalars().all()
+
+    if not result_collection:
+        raise HTTPException(status_code=404, detail="Collection not found")
+    
+    stmt_collection_with_categories = (
+        select(CatalogCollection)
+        .where(CatalogCollection.id == collection_id)
+        .options(joinedload(CatalogCollection.category)
+        .load_only(ClassificationCategory.label))
+    )
+    executed_col_w_cat = await session.execute(stmt_collection_with_categories)
+    result_col_w_cat = executed_col_w_cat.scalars().all()
+
+    return result_col_w_cat

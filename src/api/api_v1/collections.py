@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from core.config import settings
-from core.crud.collections.collections import get_all_collections, get_all_products_by_collection_id
+from core.crud.collections.collections import get_all_collections, get_all_products_by_collection_id, get_all_categories_by_collection_id
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends, Query
 from core.models.db_helper import db_helper
@@ -35,3 +35,11 @@ async def get_products_by_collection_id(
 ):
     products = await get_all_products_by_collection_id(session=session, collection_id=collection_id, subcategory_id=query_params.subcategory_id)
     return products
+
+@collections_router.get("/{collection_id}/categories", description="Get all categories by collection id")
+async def get_categories_by_collection_id(
+    collection_id: int,
+    session: AsyncSession = Depends(db_helper.session_getter)
+):
+    categories = await get_all_categories_by_collection_id(session = session, collection_id = collection_id)
+    return categories
