@@ -23,7 +23,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.env.ALLOWED_IPS,  # You can specify domains instead of *
+    allow_origins=["*"],  # You can specify domains instead of *
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

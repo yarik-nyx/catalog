@@ -12,7 +12,7 @@ class AppConfig(BaseModel):
 
 class EnvConfig(BaseSettings):
     DB_URL: str
-    ALLOWED_IPS: List[str]
+
     model_config = SettingsConfigDict(env_file=".env")
 
 class ApiV1Prefix(BaseModel):
