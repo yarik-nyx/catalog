@@ -50,7 +50,7 @@ async def get_all_products_by_collection_id(
     stmt_product = (
         select(CatalogProduct)
         .where(CatalogProduct.collection_id == collection_id)
-        # .options(joinedload(CatalogProduct.collection))
+        .options(joinedload(CatalogProduct.subcategory))
 
     )
     executed_stmt_product = await session.execute(stmt_product)
