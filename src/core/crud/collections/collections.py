@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, text
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, selectinload
 from core.models.models import CatalogCollection, CatalogProduct, ClassificationSubcategory, ClassificationCategory
 from typing import Sequence
 from fastapi import HTTPException
@@ -78,6 +78,7 @@ async def get_all_categories_by_collection_id(
         select(CatalogCollection)
         .where(CatalogCollection.id == collection_id)
         .options(joinedload(CatalogCollection.category)
+        .options(selectinload(ClassificationCategory.classification_subcategory).load_only(ClassificationSubcategory.id, ClassificationSubcategory.label))
         .load_only(ClassificationCategory.label))
     )
     executed_col_w_cat = await session.execute(stmt_collection_with_categories)
