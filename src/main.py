@@ -16,6 +16,7 @@ async def lifespan(app: FastAPI):
     await db_helper.db_helper.dispose()
 
 app = FastAPI(
+    root_path="/fastapi",
     default_response_class = ORJSONResponse,
     lifespan = lifespan,
     docs_url= "/docs"

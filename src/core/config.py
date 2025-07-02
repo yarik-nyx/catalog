@@ -6,8 +6,8 @@ from typing import List
 
 
 class AppConfig(BaseModel):
-    host: str = "127.0.0.1"
-    port: int = 8000
+    host: str = "api"
+    port: int = 5000
     
 
 class EnvConfig(BaseSettings):
