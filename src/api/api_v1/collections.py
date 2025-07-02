@@ -30,10 +30,9 @@ async def get_collections(
 @collections_router.get("/{collection_id}/products", description="Get all products by collection id")
 async def get_products_by_collection_id(
     collection_id: int,
-    query_params: CatalogCollectionQueryParamsSubcategoryId = Query(...),
     session: AsyncSession = Depends(db_helper.session_getter)
 ):
-    products = await get_all_products_by_collection_id(session=session, collection_id=collection_id, subcategory_id=query_params.subcategory_id)
+    products = await get_all_products_by_collection_id(session=session, collection_id=collection_id)
     return products
 
 @collections_router.get("/{collection_id}/categories", description="Get all categories by collection id")

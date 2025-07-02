@@ -26,7 +26,6 @@ async def get_all_collections(
 async def get_all_products_by_collection_id(
         session: AsyncSession,
         collection_id: int,
-        subcategory_id: int
     ):
     stmt_get_collection = (
         select(CatalogCollection)
@@ -38,21 +37,20 @@ async def get_all_products_by_collection_id(
     if not result_collection:
         raise HTTPException(status_code=404, detail="Collection not found")
     
-    stmt_get_subcategory = (
-        select(ClassificationSubcategory)
-        .where(ClassificationSubcategory.id == subcategory_id)
-    )
-    executed_stmt_subcategory = await session.execute(stmt_get_subcategory)
-    result_subcategory = executed_stmt_subcategory.scalars().all()
+    # stmt_get_category = (
+    #     select(ClassificationCategory)
+    #     .where(ClassificationCategory.id == category_id)
+    # )
+    # executed_stmt_category = await session.execute(stmt_get_category)
+    # result_category = executed_stmt_category.scalars().all()
 
-    if not result_subcategory:
-        raise HTTPException(status_code=404, detail="Subcategory not found")
+    # if not result_category:
+    #     raise HTTPException(status_code=404, detail="Category not found")
     
     stmt_product = (
         select(CatalogProduct)
         .where(CatalogProduct.collection_id == collection_id)
-        .where(CatalogProduct.subcategory_id == subcategory_id)
-        .options(joinedload(CatalogProduct.subcategory))
+        # .options(joinedload(CatalogProduct.collection))
 
     )
     executed_stmt_product = await session.execute(stmt_product)
@@ -78,7 +76,6 @@ async def get_all_categories_by_collection_id(
         select(CatalogCollection)
         .where(CatalogCollection.id == collection_id)
         .options(joinedload(CatalogCollection.category)
-        .options(selectinload(ClassificationCategory.classification_subcategory).load_only(ClassificationSubcategory.id, ClassificationSubcategory.label))
         .load_only(ClassificationCategory.label))
     )
     executed_col_w_cat = await session.execute(stmt_collection_with_categories)
